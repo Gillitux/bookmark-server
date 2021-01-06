@@ -12,20 +12,26 @@ bookmarkRouter
     res.json(bookmarks);
   })
   .post(bodyParser, (req, res) => {
-    const { title, url } = req.body;
+    const { title, url, description, rating } = req.body;
     if (!title) {
       logger.error(`Title is required`);
       return res.status(400).send("need title");
     }
     if (!url) {
-      logger.error(`Content is required`);
-      return res.status(400).send("need content");
+      logger.error(`URL is required`);
+      return res.status(400).send("need url");
+    }
+    if (!rating) {
+      logger.error(`Rating is required`);
+      return res.status(400).send("need rating");
     }
     const id = uuid();
     const bookmark = {
       id,
       title,
       url,
+      description,
+      rating,
     };
     bookmarks.push(bookmark);
     logger.info(`Bookmark with id ${id} created`);
